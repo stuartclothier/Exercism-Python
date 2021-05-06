@@ -23,28 +23,3 @@ class Matrix:
 
         return column
 
-A = Matrix("1 2 3\n4 5 6\n7 8 9\n8 7 6")
-
-print(A.matrix)
-
-print(A.row(2)[2])
-
-A.row(2)[2] = 74
-
-print(A.row(2)[2])
-
-print(A.column(2))
-
-A.column(2)[0] = 44
-
-print(A.column(2))
-
-# print(A.column(2)[2])
-
-# A.column(2)[2] = 34
-
-# print(A.column(2)[2])
-
-# A.matrix[2][1] = 99
-
-# print(A.column(2)[2])
