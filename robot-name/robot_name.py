@@ -1,6 +1,7 @@
 import string
 import random
 
+robot_list = set()
 
 class Robot:
 
@@ -8,8 +9,12 @@ class Robot:
         self.reset()
 
     def reset(self):
-        self.name = f"{''.join(random.choices(string.ascii_uppercase,k = 2))}{''.join(random.choices(string.digits,k=3))}"
 
+        self.name = ''.join(random.choices(
+                    string.ascii_uppercase, k=2)+
+                    random.choices(string.digits, k=3))
 
-print(Robot().name)
-print(Robot().name)
+        if self.name in robot_list:
+            self.reset()
+
+        robot_list.add(self.name)
