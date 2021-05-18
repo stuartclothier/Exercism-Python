@@ -11,7 +11,6 @@ class Allergies:
         n = (int(log(score)/log(2)) if score else 0) \
             if score < 256 else 7
 
-        # Create allergy list for score
         self.allergy_list = [self.all_allergies[i]
                              for i in range(n+1) if score//2**i % 2]
 
