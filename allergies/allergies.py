@@ -1,19 +1,20 @@
 from math import log
 
+
 class Allergies:
     alles_list = ['eggs',
-                           'peanuts',
-                           'shellfish',
-                           'strawberries',
-                           'tomatoes',
-                           'chocolate',
-                           'pollen',
-                           'cats']
+                  'peanuts',
+                  'shellfish',
+                  'strawberries',
+                  'tomatoes',
+                  'chocolate',
+                  'pollen',
+                  'cats']
 
     def __init__(self, score: int) -> None:
 
         base2 = []
-        
+
         # convert score to base 2 list if score isn't 0.
         if score:
             n = int(log(score)/log(2))
@@ -25,9 +26,9 @@ class Allergies:
                 else:
                     base2.append(0)
 
-        # Create list of allergies 
+        # Create list of allergies
         self.allergy_list = [b for a, b in zip(
-                base2[-1::-1], self.alles_list) if a]
+            base2[-1::-1], self.alles_list) if a]
         return None
 
     def allergic_to(self, item: str) -> bool:
