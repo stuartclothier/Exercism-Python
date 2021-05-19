@@ -12,7 +12,7 @@ class Allergies:
             if score < 256 else 7
 
         self.allergy_list = [self.all_allergies[i]
-                             for i in range(n+1) if score//2**i % 2]
+                             for i in range(n+1) if score >> i & 1]
 
     def allergic_to(self, item: str) -> bool:
         return item in self.allergy_list
