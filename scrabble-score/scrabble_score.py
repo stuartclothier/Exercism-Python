@@ -46,3 +46,5 @@ def score(
         score = 3 * score
 
     return score
+
+print(score("hello", dl='h',tl='h', tw=True))
