@@ -11,14 +11,12 @@ def abbreviate(words):
 
 
 def abbreviate(words):
-
     return "".join(
         word[0] for word in words.replace("-", " ").replace("_", " ").split()
     ).upper()
 
 
 def abbreviate(words):
-
     return "".join(
         filter(lambda s: s.isupper(), words.replace("'", "").title())
     )
