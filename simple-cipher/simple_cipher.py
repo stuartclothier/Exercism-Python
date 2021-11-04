@@ -1,31 +1,35 @@
+from random import randint
+
+
 class Cipher:
     def __init__(self, key=None):
-        self.key = [ord(each) - 97 for each in key]
+        if key:
+            if not key.isalpha():
+                raise ("Key must be alpha characters only")
+            self.key = str.lower(key)
+        else:
+            self.key = "".join(chr(randint(97, 122)) for i in range(100))
 
     def encode(self, text):
-        text_list = Cipher(text).key
-        if len(self.key)<len(text_list):
-            self.key = self.key*(len(text_list)//len(self.key)+1)
-        coded = [chr((x + y) % 26 + 97) for x, y in zip(text_list, self.key)]
+        # ensure key is long enough to cover text
+        if len(self.key) < len(text):
+            self.key = self.key * (len(text) // len(self.key) + 1)
+
+        coded = [
+            chr((ord(x) + ord(y) - 194) % 26 + 97)
+            for x, y in zip(text, self.key)
+        ]
 
         return "".join(coded)
 
     def decode(self, text):
-        text_list = Cipher(text).key
-        if len(self.key)<len(text_list):
-            self.key = self.key*(len(text_list)//len(self.key)+1)
-        
-        coded = [chr((x - y) % 26 + 97) for x, y in zip(text_list, self.key)]
+        # ensure key is long enough to cover text
+        if len(self.key) < len(text):
+            self.key = self.key * (len(text) // len(self.key) + 1)
+
+        coded = [
+            chr((ord(x) - ord(y) + 26) % 26 + 97)
+            for x, y in zip(text, self.key)
+        ]
 
         return "".join(coded)
-
-# cipher = Cipher("abcdefghij")
-# plaintext = "aaaaaaaaaa"
-
-
-# print(cipher.encode(plaintext))
-# print(cipher.decode(cipher.encode(plaintext)))
-
-# cipher = Cipher("abc")
-# plaintext = "iamapandabear"
-# print(cipher.encode(plaintext))
