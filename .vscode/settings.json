@@ -1,4 +1,9 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.pythonPath": "C:\\Users\\stuar\\.julia\\conda\\3\\envs\\jupyterlab\\python.exe"
+    "python.pythonPath": "C:\\Users\\stuar\\.julia\\conda\\3\\envs\\jupyterlab\\python.exe",
+    "python.testing.pytestArgs": [
+        "guidos-gorgeous-lasagna"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
