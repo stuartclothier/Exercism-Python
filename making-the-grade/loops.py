@@ -4,7 +4,7 @@ def round_scores(student_scores):
     :return: list of student scores *rounded* to nearest integer value.
     """
 
-    pass
+    return [round(score) for score in student_scores]
 
 
 def count_failed_students(student_scores):
@@ -13,7 +13,7 @@ def count_failed_students(student_scores):
     :return: integer count of student scores at or below 40.
     """
 
-    pass
+    return sum([1 for score in student_scores if score <= 40])
 
 
 def above_threshold(student_scores, threshold):
@@ -23,7 +23,7 @@ def above_threshold(student_scores, threshold):
     :return: list of integer scores that are at or above the "best" threshold.
     """
 
-    pass
+    return [score for score in student_scores if score >= threshold]
 
 
 def letter_grades(highest):
@@ -39,17 +39,22 @@ def letter_grades(highest):
              86 <= "A" <= 100
     """
 
-    pass
+    return [score for score in range(41, highest, (highest - 40) // 4)]
 
 
 def student_ranking(student_scores, student_names):
     """
-     :param student_scores: list of scores in descending order.
-     :param student_names: list of names in descending order by exam score.
-     :return: list of strings in format ["<rank>. <student name>: <score>"].
-     """
+    :param student_scores: list of scores in descending order.
+    :param student_names: list of names in descending order by exam score.
+    :return: list of strings in format ["<rank>. <student name>: <score>"].
+    """
 
-    pass
+    return [
+        f"{rank}. {name}: {score}"
+        for rank, name, score in zip(
+            range(1, len(student_scores) + 1), student_names, student_scores
+        )
+    ]
 
 
 def perfect_score(student_info):
@@ -57,4 +62,7 @@ def perfect_score(student_info):
     :param student_info: list of [<student name>, <score>] lists
     :return: first `[<student name>, 100]` or `[]` if no student score of 100 is found.
     """
-    pass
+    for each in student_info:
+        if each[1] == 100:
+            return each
+    return []
