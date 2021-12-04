@@ -3,16 +3,24 @@ from math import log
 
 class Allergies:
 
-    all_allergies = ['eggs', 'peanuts', 'shellfish', 'strawberries',
-                     'tomatoes', 'chocolate', 'pollen', 'cats']
+    all_allergies = [
+        "eggs",
+        "peanuts",
+        "shellfish",
+        "strawberries",
+        "tomatoes",
+        "chocolate",
+        "pollen",
+        "cats",
+    ]
 
     def __init__(self, score: int) -> None:
         # n determines the highest indexed allergy possible
-        n = (int(log(score)/log(2)) if score else 0) \
-            if score < 256 else 7
+        n = (int(log(score) / log(2)) if score else 0) if score < 256 else 7
 
-        self.allergy_list = [self.all_allergies[i]
-                             for i in range(n+1) if score >> i & 1]
+        self.allergy_list = [
+            self.all_allergies[i] for i in range(n + 1) if score >> i & 1
+        ]
 
     def allergic_to(self, item: str) -> bool:
         return item in self.allergy_list
