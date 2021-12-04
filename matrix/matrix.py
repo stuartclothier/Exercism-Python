@@ -9,7 +9,3 @@ class Matrix:
 
     def column(self, index: int) -> list[int]:
         return [row[index - 1] for row in self.matrix]
-
-
-a = Matrix("1 2\n3 4")
-print(a.row(2), [3, 4])
