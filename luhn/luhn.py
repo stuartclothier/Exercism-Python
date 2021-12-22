@@ -5,9 +5,8 @@ class Luhn:
     def valid(self) -> bool:
 
         return (
-            True
-            if len(self.num) > 1
-            and self.num.isdigit()
+            self.num.isdigit()
+            and len(self.num) > 1
             and (
                 (
                     sum(
@@ -23,5 +22,4 @@ class Luhn:
                 % 10
                 == 0
             )
-            else False
         )
