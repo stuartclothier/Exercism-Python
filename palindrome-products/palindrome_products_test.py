@@ -6,6 +6,7 @@ from palindrome_products import (
 )
 
 # Tests adapted from `problem-specifications//canonical-data.json`
+print(smallest(min_factor=1, max_factor=9))
 
 
 class PalindromeProductsTest(unittest.TestCase):

@@ -35,17 +35,31 @@ def is_palindrome(num: int) -> bool:
     :return: bool
     """
 
-    pal = False
-    if 0 <= num < 10:
-        pal = True
+    # pal = False
+    # if 0 <= num < 10:
+    #     pal = True
 
-    elif num > 9 and not pal:
-        digs = int(log(num, 10))
-        if num // 10 ** digs == num % 10:
-            new_no = num // 10 % 10 ** (digs - 1)
-            pal = is_palindrome(new_no)
+    # elif num > 9 and not pal:
+    #     digs = int(log(num, 10))
+    #     if num // 10 ** digs == num % 10:
+    #         new_no = num // 10 % 10 ** (digs - 1)
+    #         if new_no and int(log(new_no, 10)) != digs - 2:
+    #             new_no = new_no // 10 ** ((digs - int(log(new_no, 10))) / 2)
+    #         pal = is_palindrome(new_no)
 
-    return pal
+    # store a copy of this number
+    temp = num
+    # calculate reverse of this number
+    reverse_num = 0
+    while num > 0:
+        # extract last digit of this number
+        digit = num % 10
+        # append this digit in reveresed number
+        reverse_num = reverse_num * 10 + digit
+        # floor divide the number leave out the last digit from number
+        num = num // 10
+
+    return temp == reverse_num  # pal
 
 
 def palindrome(
@@ -65,13 +79,14 @@ def palindrome(
         raise ValueError("min must be <= max")
 
     res = prod_list(max_factor, min_factor)
+    pal = None
 
     for each in sorted(list(res), reverse=reverse):
         if is_palindrome(each):
             pal = each
             break
 
-    return pal, res[pal]
+    return (pal, res[pal]) if pal else (pal, [])
 
 
 def largest(max_factor: int, min_factor: int = 0) -> tuple[int, list[int]]:
@@ -98,5 +113,5 @@ def smallest(max_factor: int, min_factor: int = 0) -> tuple[int, list[int]]:
     return palindrome(max_factor, min_factor)
 
 
-print(smallest(min_factor=100, max_factor=999))
-print(is_palindrome(10201))
+print(smallest(min_factor=13, max_factor=38))
+print(is_palindrome(1001001001))
