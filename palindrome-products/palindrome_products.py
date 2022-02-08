@@ -2,28 +2,6 @@
 Given a range of numbers, these functions find the largest or smallest
 palindromes which are products of two numbers within that range
 """
-from math import log
-
-
-def prod_list(max_factor: int, min_factor: int) -> dict[int : list[int]]:
-    """
-    Create a dictionary with the product of two numbers as the key and the
-    list of the two numbers as the value.
-
-    :param max_factor: int - the maximum value of both factors
-    :param min_factor: int - The lowest number you want to check
-    :return: dict() A dictionary with the key being the product of the factors
-    and the value being a list of the factors.
-    """
-
-    res = dict()
-    for i in range(min_factor, max_factor + 1):
-        for j in range(i, max_factor + 1):
-            if i * j in res:
-                res[i * j].append([i, j])
-            else:
-                res[i * j] = [[i, j]]
-    return res
 
 
 def is_palindrome(num: int) -> bool:
@@ -31,87 +9,84 @@ def is_palindrome(num: int) -> bool:
     Given a number, return True if it is a palindrome, else return False.
 
     :param num: int
-    :type num: int
     :return: bool
     """
 
-    # pal = False
-    # if 0 <= num < 10:
-    #     pal = True
+    if num % 10 == 0:
+        return False
 
-    # elif num > 9 and not pal:
-    #     digs = int(log(num, 10))
-    #     if num // 10 ** digs == num % 10:
-    #         new_no = num // 10 % 10 ** (digs - 1)
-    #         if new_no and int(log(new_no, 10)) != digs - 2:
-    #             new_no = new_no // 10 ** ((digs - int(log(new_no, 10))) / 2)
-    #         pal = is_palindrome(new_no)
-
-    # store a copy of this number
     temp = num
-    # calculate reverse of this number
     reverse_num = 0
     while num > 0:
-        # extract last digit of this number
         digit = num % 10
-        # append this digit in reveresed number
         reverse_num = reverse_num * 10 + digit
-        # floor divide the number leave out the last digit from number
         num = num // 10
 
-    return temp == reverse_num  # pal
+    return temp == reverse_num
 
 
-def palindrome(
-    max_factor: int, min_factor: int, reverse: bool = False
-) -> tuple[int, list[int]]:
+def val(min_factor: int, max_factor: int) -> None:
     """
-    Given a range of numbers, find the smallest or largest
-    (dependant on reverse param) palindrome which is a product
-    of two numbers within that range.
+    Validate min is less than max
 
-    :param max_factor: int - the maximum factor
-    :param min_factor: int - the smallest factor to consider default 0
-    :param reverse: bool - If True, returns highest palindrome, defaults False
-    :return: tuple - (palindrome, list[factors]).
+    :param min_factor: int - the smallest number to be multiplied
+    :param max_factor: int - The largest number to consider for
+    the product of two numbers
+    :return: Nothing
     """
     if max_factor < min_factor:
         raise ValueError("min must be <= max")
-
-    res = prod_list(max_factor, min_factor)
-    pal = None
-
-    for each in sorted(list(res), reverse=reverse):
-        if is_palindrome(each):
-            pal = each
-            break
-
-    return (pal, res[pal]) if pal else (pal, [])
+    return None
 
 
-def largest(max_factor: int, min_factor: int = 0) -> tuple[int, list[int]]:
-    """Given a range of numbers, find the largest palindrome which
-    is the product of two numbers within that range.
+def pal(start: int, stop: int, order: int) -> list[int, list[int]]:
+    """
+    Find the smallest or largest palindrome made from the product of
+    two numbers
 
-    :param min_factor: int - with a default value of 0
-    :param max_factor: int
-    :return: tuple - (palindrome, list[factors]).
+    :param start: The first number to check for palindromes
+    :param stop: The last number to check for palindromes
+    :param order: 1 for ascending/smallest, -1 for descending/largest
+    :return: The palindrome and the factors.
     """
 
-    return palindrome(max_factor, min_factor, True)
+    factors = range(start, stop + order, order)
+    facs = []
+    for i in range(start ** 2, stop ** 2 + order, order):
+        if is_palindrome(i):
+            for j in factors:
+                if i % j == 0 and i // j in factors:
+                    facs += [[j, i // j][::order]]
+            if facs:
+                break
+        if not facs:
+            i = None
+
+    return i, facs
 
 
-def smallest(max_factor: int, min_factor: int = 0) -> tuple[int, list[int]]:
-    """Given a range of numbers, find the smallest palindrome which
-    is the products of two numbers within that range.
-
-    :param min_factor: int - with a default value of 0
-    :param max_factor: int
-    :return: tuple - (palindrome, list[factors])
+def smallest(min_factor: int, max_factor: int) -> list[int, list[int]]:
     """
+    Find the smallest palindrome number between two numbers
 
-    return palindrome(max_factor, min_factor)
+    :param min_factor: int - The smallest number to consider when
+    looking for a palindrome
+    :param max_factor: int - The largest possible factor
+    :return: list - The smallest palindrome and the factors that make it up.
+    """
+    val(min_factor, max_factor)
+    return pal(min_factor, max_factor, 1)
 
 
-print(smallest(min_factor=13, max_factor=38))
-print(is_palindrome(1001001001))
+def largest(min_factor: int, max_factor: int) -> list[int, list[int]]:
+    """
+    Find the largest palindrome made from the product of two numbers
+    between min_factor and max_factor
+
+    :param min_factor: int - The smallest number to consider when
+    looking for a palindrome
+    :param max_factor: int - The largest possible factor
+    :return: list - The largest palindrome and the factors that make it up.
+    """
+    val(min_factor, max_factor)
+    return pal(max_factor, min_factor, -1)
