@@ -2,7 +2,6 @@ class Clock:
     def __init__(self, hour, minute):
         self.hour = (hour + minute // 60) % 24
         self.minute = minute % 60
-        return None
 
     def __repr__(self):
         return "{:0>2}:{:0>2}".format(self.hour, self.minute)
@@ -15,3 +14,6 @@ class Clock:
 
     def __sub__(self, minutes):
         return Clock(self.hour, self.minute - minutes)
+
+
+print(Clock(1, 0) == Clock(1, 0))
