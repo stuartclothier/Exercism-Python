@@ -14,6 +14,3 @@ class Clock:
 
     def __sub__(self, minutes):
         return Clock(self.hour, self.minute - minutes)
-
-
-print(Clock(1, 0) == Clock(1, 0))

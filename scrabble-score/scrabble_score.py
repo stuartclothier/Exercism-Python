@@ -9,6 +9,7 @@ my_dict = {
     "QZ": 10,
 }
 
+
 def score(
     word: str, dl: str = "", tl: str = "", dw: bool = False, tw: bool = False
 ) -> int:
@@ -46,5 +47,3 @@ def score(
         score = 3 * score
 
     return score
-
-print(score("hello", dl='h',tl='h', tw=True))
