@@ -20,10 +20,13 @@ def parse(markdown):
         # Check for list
         li = re.match(r"\* (.*)", i)
         if li:
+            print("list found", i)
             i = i[2:]
             if not in_list:
-                i = f"<ul>{i}"
+                print("list opened", i)
+                res += "<ul>"
                 in_list = True
+            print("list active", i)
             element = "li"
         elif not li and in_list:
             in_list = False
@@ -45,17 +48,21 @@ def parse(markdown):
             "em": r"((?<!\*)\*(?!\*)(.*)\*)|_(.*)_",  # Possibly add look behind
         }
 
-        for element, reg in formats.items():
+        for format_element, reg in formats.items():
             if re.search(reg, i):
+                print("i'm here", reg, i)
                 m1 = re.search(reg, i)
 
-                i = f"""{m1.string[0 : m1.start()]}<{element}>{m1.groups()[-1]}</{element}>{m1.string[m1.end() :]}"""
+                i = f"{m1.string[0 : m1.start()]}<{format_element}>{m1.groups()[-1]}</{format_element}>{m1.string[m1.end() :]}"
 
         # Think this adds outer tags, e.g. heading or paragraph
         i = f"<{element}>{i}</{element}>"
         res += i
 
+    if in_list:
+        res += "</ul>"
+
     return res
 
 
-print(parse("__How does _This will be bold___"))
+print(parse("* Item 1\n* Item 2"))
